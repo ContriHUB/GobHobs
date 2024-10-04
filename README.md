@@ -111,12 +111,12 @@ git checkout -b your-feature-branch
 git add .
 git commit -m "change-mentioned"
 git push origin your-feature-branch-name
+```
 
 
 
----
 
-## 🎉 All the Best & Happy Coding! 🎉
+### 5. 🎉 All the Best & Happy Coding! 🎉
 
 Thank you for joining the **GobHobs** adventure! We hope you enjoy working on this project as much as the goblins enjoy looting and extracting data.
 

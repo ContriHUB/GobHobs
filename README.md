@@ -81,7 +81,7 @@ Watch the video tutorial below to get a complete walkthrough of how to set up an
 3. Using the GobHobs CLI for PDF extraction, phone record searching, and web scraping.
 4. Implementing your custom logic in Python or JavaScript for each microservice.
 
-**[Click here to watch the full video walkthrough](https://www.example.com/your-video-link)**
+**[Click here to watch the full video walkthrough](https://drive.google.com/file/d/1ETA9ODEe7Kb5uuF0-V2XLz4ha6tX5SYQ/view?usp=sharing)**
 
 ---
 
@@ -93,7 +93,7 @@ Follow these steps to pull the code, make your own changes, and create a new bra
 First, clone the repository to your local machine using Git:
 
 ```bash
-git clone https://github.com/your-username/GobHobs.git
+git clone "Repository-link"
 ```
 
 ### 2. navigate to the Project directory 

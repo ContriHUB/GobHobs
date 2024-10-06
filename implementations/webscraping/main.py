@@ -4,13 +4,15 @@ import json
 import sys
 import subprocess
 import os
+import random
 
-# Define the path for the data folder
+# Define the paths for the data and result folders
 data_folder = os.path.join(os.path.dirname(__file__), 'data')
+result_folder = os.path.join(os.path.dirname(__file__), 'results')
 
-# Create the data folder if it doesn't exist
-if not os.path.exists(data_folder):
-    os.makedirs(data_folder)
+# Create the result folder if it doesn't exist
+if not os.path.exists(result_folder):
+    os.makedirs(result_folder)
 
 def web_scrape(query, output_file):
     # Ensure the output file has a .json extension and is saved in the data folder
@@ -36,7 +38,7 @@ def web_scrape(query, output_file):
 
     # Parse the HTML content
     soup = BeautifulSoup(response.text, 'html.parser')
-
+    print(response)
     # Find the top 30 search result links
     results = []
     for index, item in enumerate(soup.select('h3')):
@@ -66,8 +68,21 @@ def web_scrape(query, output_file):
 
 def fetch_body_content(link):
     try:
-        # Send a GET request to the individual link
-        response = requests.get(link)
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+            "Accept-Language": "en-US,en;q=0.9",
+            "Accept-Encoding": "gzip, deflate, br",
+            "Referer": "https://www.google.com/"
+        }
+
+        # Optionally, add proxy handling
+        # proxies = {
+        #     'http': 'http://your-proxy-server:port',
+        #     'https': 'https://your-proxy-server:port'
+        # }
+
+        # Send the GET request
+        response = requests.get(link, headers=headers)
 
         if response.status_code != 200:
             print(f"Failed to retrieve content from {link}: {response.status_code}")
@@ -88,53 +103,70 @@ def fetch_body_content(link):
         return ""
 
 def order_data(filename, keywords):
+    # Generate a random 3-digit number for versioning
+    version_number = random.randint(100, 999)
+    
     # Define paths for ordering scripts
-    ordering_python_path = os.path.join('implementations/webscraping/ordering.py')
-    ordering_js_path = os.path.join('implementations/webscraping/ordering.js')
+    ordering_python_path = os.path.join(os.path.dirname(__file__), 'ordering.py')
+    ordering_js_path = os.path.join(os.path.dirname(__file__), 'ordering.js')
+
+    # Full path to the JSON file in the data folder
+    json_file_path = os.path.join(data_folder, f"{filename}.json")
 
     # Check if the JSON file exists
-    if not os.path.exists(filename):
-        print("File not found. Please make sure the filename is correct.")
+    if not os.path.exists(json_file_path):
+        print(f"File '{filename}.json' not found in the data folder.")
         return
 
+    # Define output file path in the result folder with version number
+    output_file_name = f"{filename}_version{version_number}.json"
+    output_file_path = os.path.join(result_folder, output_file_name)
+    
     # Convert keywords to a comma-separated string for the subprocess call
     keyword_str = ','.join(keywords)
 
     # Attempt to call the Python ordering implementation
     try:
-        result = subprocess.check_output(['python', ordering_python_path, filename, keyword_str])
-        print("Python ordering implementation was successful.")
-        return result.decode('utf-8')
+        result = subprocess.check_output(['python', ordering_python_path, json_file_path, keyword_str, output_file_path])
+        print(f"Python ordering implementation was successful. Ordered file saved as {output_file_name}")
+        return output_file_name
     except subprocess.CalledProcessError:
-        print("Python ordering implementation not found or failed. Trying JavaScript...")
+        print("Python ordering implementation failed. Trying JavaScript...")
 
     # If Python ordering failed, try JavaScript
     try:
-        result = subprocess.check_output(['node', ordering_js_path, filename, keyword_str])
-        print("JavaScript ordering implementation was successful.")
-        return result.decode('utf-8')
+        result = subprocess.check_output(['node', ordering_js_path, json_file_path, keyword_str, output_file_path])
+        print(f"JavaScript ordering implementation was successful. Ordered file saved as {output_file_name}")
+        return output_file_name
     except subprocess.CalledProcessError:
-        print("JavaScript ordering implementation not found or failed.")
+        print("JavaScript ordering implementation failed.")
         return None
 
 if __name__ == "__main__":
     # Check command-line arguments for web scraping or ordering
-    if len(sys.argv) < 3:
-        print("Usage: python main.py <search_query> <output_file> OR python main.py <filename> <keyword1> <keyword2> ...")
+    if len(sys.argv) < 2:
+        print("Usage: python main.py <'webscrape'/'order'> <other arguments>")
         sys.exit(1)
 
-    # Determine if we are scraping or ordering based on the number of arguments
-    if len(sys.argv) == 3:
+    command = sys.argv[1].lower()
+
+    if command == "webscrape" and len(sys.argv) == 4:
         # Perform web scraping
-        search_query = sys.argv[1]
-        output_filename = sys.argv[2]
+        search_query = sys.argv[2]
+        output_filename = sys.argv[3]
         web_scrape(search_query, output_filename)
-    else:
+
+    elif command == "order" and len(sys.argv) >= 4:
         # Perform ordering
-        keywords = sys.argv[2:]  # Remaining arguments are keywords
-        ordered_result = order_data(sys.argv[1], keywords)
+        filename = sys.argv[2]
+        keywords = sys.argv[3:]  # Remaining arguments are keywords
+        ordered_result = order_data(filename, keywords)
 
         if ordered_result:
             print(f"Ordered data result:\n{ordered_result}")
         else:
             print("Ordering operation failed.")
+    else:
+        print("Invalid usage. Correct format:\n"
+              "For web scraping: python main.py webscrape <search_query> <output_file>\n"
+              "For ordering: python main.py order <filename> <keyword1> <keyword2> ...")

@@ -12,8 +12,8 @@ def webscrape():
     output_file = request.json['output_file']  # Get the output filename
 
     try:
-        # Call the main.py web scraping function
-        result = subprocess.check_output(['python', '../implementations/webscraping/main.py', query, output_file])
+        # Call the main.py web scraping function with 'webscrape' as the first argument
+        result = subprocess.check_output(['python', '../implementations/webscraping/main.py', 'webscrape', query, output_file])
         
         # Assume the output is in the correct format
         return jsonify({"result": result.decode('utf-8')})
@@ -32,12 +32,17 @@ def order():
     filename = request.json['filename']  # JSON file to order
     keywords = request.json['keywords']  # List of keywords
 
-    # Call the order function in main.py
     try:
-        result = subprocess.check_output(['python', '../implementations/webscraping/main.py', filename, *keywords])
+        # Call the order function in main.py with 'order' as the first argument
+        result = subprocess.check_output(['python', '../implementations/webscraping/main.py', 'order', filename, *keywords])
         return jsonify({"result": result.decode('utf-8')})
+
     except subprocess.CalledProcessError as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"error": f"Ordering failed: {str(e)}"}), 500
+
+    except Exception as e:
+        return jsonify({"error": f"An unexpected error occurred: {str(e)}"}), 500
+
     
 @app.route('/createjson', methods=['POST'])
 def create_json():

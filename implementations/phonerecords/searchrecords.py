@@ -1,6 +1,8 @@
 import json
 import os
 
+#Search for records in the specified JSON file.
+
 # Function to calculate Levenshtein distance with a threshold for early exit
 def levenshtein_distance(str1, str2):
     m = len(str1)
@@ -75,10 +77,3 @@ def search_records(json_filename, field_index, search_term):
                 like_matches.append(record)
 
     return exact_matches, like_matches
-
-
-
-
-
-
-

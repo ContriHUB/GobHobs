@@ -1,6 +1,10 @@
 Flask==2.0.1           # Flask for backend API
 requests==2.26.0       # For HTTP requests in both frontend and web scraping
 beautifulsoup4==4.10.0 # For web scraping (HTML parsing)
+
+lxml==5.3.0           # For faster HTML parsing in BeautifulSoup
+pdfminer.six==20201018 # Alternative PDF extraction library
+
 lxml==4.6.3            # For faster HTML parsing in BeautifulSoup
 PyMuPDF==1.18.19       # For PDF image extraction functionality
 pdfplumber==0.5.28     # For structured PDF extraction (text, tables)      

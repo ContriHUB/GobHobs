@@ -1,0 +1,82 @@
+[
+  {
+    "\ufeffName": "White",
+    "HEX": "#FFFFFF",
+    "RGB": "rgb(100,100,100)"
+  },
+  {
+    "\ufeffName": "Silver",
+    "HEX": "#C0C0C0",
+    "RGB": "rgb(75,75,75)"
+  },
+  {
+    "\ufeffName": "Gray",
+    "HEX": "#808080",
+    "RGB": "rgb(50,50,50)"
+  },
+  {
+    "\ufeffName": "Black",
+    "HEX": "#000000",
+    "RGB": "rgb(0,0,0)"
+  },
+  {
+    "\ufeffName": "Red",
+    "HEX": "#FF0000",
+    "RGB": "rgb(100,0,0)"
+  },
+  {
+    "\ufeffName": "Maroon",
+    "HEX": "#800000",
+    "RGB": "rgb(50,0,0)"
+  },
+  {
+    "\ufeffName": "Yellow",
+    "HEX": "#FFFF00",
+    "RGB": "rgb(100,100,0)"
+  },
+  {
+    "\ufeffName": "Olive",
+    "HEX": "#808000",
+    "RGB": "rgb(50,50,0)"
+  },
+  {
+    "\ufeffName": "Lime",
+    "HEX": "#00FF00",
+    "RGB": "rgb(0,100,0)"
+  },
+  {
+    "\ufeffName": "Green",
+    "HEX": "#008000",
+    "RGB": "rgb(0,50,0)"
+  },
+  {
+    "\ufeffName": "Aqua",
+    "HEX": "#00FFFF",
+    "RGB": "rgb(0,100,100)"
+  },
+  {
+    "\ufeffName": "Teal",
+    "HEX": "#008080",
+    "RGB": "rgb(0,50,50)"
+  },
+  {
+    "\ufeffName": "Blue",
+    "HEX": "#0000FF",
+    "RGB": "rgb(0,0,100)"
+  },
+  {
+    "\ufeffName": "Navy",
+    "HEX": "#000080",
+    "RGB": "rgb(0,0,50)"
+  },
+  {
+    "\ufeffName": "Fuchsia",
+    "HEX": "#FF00FF",
+    "RGB": "rgb(100,0,100)"
+  },
+  {
+    "\ufeffName": "Purple",
+    "HEX": "#800080",
+    "RGB": "rgb(50,0,50)"
+  }
+]
